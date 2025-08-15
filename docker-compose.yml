@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: fullstack-app-backend
+    ports:
+      - "8090:5000"    # External : Internal
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fullstack-app-frontend
+    ports:
+      - "80:80"        # Frontend served directly on port 80 externally
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
